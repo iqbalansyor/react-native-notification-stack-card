@@ -9,6 +9,8 @@
   "author": "Iqbal Ansyori <ansyori.iqbal@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/react": "^16.9.48",
+    "@types/react-native": "^0.63.10",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },

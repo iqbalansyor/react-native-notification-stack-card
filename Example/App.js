@@ -1,114 +1,192 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
  *
- * @format
- * @flow strict-local
+ * Inspiration: https://dribbble.com/shots/3731362-Event-cards-iOS-interaction
  */
 
-import React from 'react';
+import * as React from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
   StatusBar,
+  Image,
+  FlatList,
+  Dimensions,
+  Animated,
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  TouchableHighlight,
 } from 'react-native';
-
+const {width} = Dimensions.get('screen');
+// import {EvilIcons} from '@expo/vector-icons';
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  FlingGestureHandler,
+  Directions,
+  State,
+} from 'react-native-gesture-handler';
+import StackList, {setActiveIndex} from './StackList';
 
-const App: () => React$Node = () => {
+// https://www.creative-flyers.com
+const DATA = [
+  {
+    title: 'Afro vibes',
+    location: 'Mumbai, India',
+    date: 'Nov 17th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/07/Afro-vibes-flyer-template.jpg',
+  },
+  {
+    title: 'Jungle Party',
+    location: 'Unknown',
+    date: 'Sept 3rd, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2019/11/Jungle-Party-Flyer-Template-1.jpg',
+  },
+  {
+    title: '4th Of July',
+    location: 'New York, USA',
+    date: 'Oct 11th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/4th-Of-July-Invitation.jpg',
+  },
+  {
+    title: 'Summer festival',
+    location: 'Bucharest, Romania',
+    date: 'Aug 17th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/07/Summer-Music-Festival-Poster.jpg',
+  },
+  {
+    title: 'BBQ with friends',
+    location: 'Prague, Czech Republic',
+    date: 'Sept 11th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/BBQ-Flyer-Psd-Template.jpg',
+  },
+  {
+    title: 'Festival music',
+    location: 'Berlin, Germany',
+    date: 'Apr 21th, 2021',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Festival-Music-PSD-Template.jpg',
+  },
+  {
+    title: 'Beach House',
+    location: 'Liboa, Portugal',
+    date: 'Aug 12th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Summer-Beach-House-Flyer.jpg',
+  },
+  {
+    title: 'BBQ with friends',
+    location: 'Prague, Czech Republic',
+    date: 'Sept 11th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/BBQ-Flyer-Psd-Template.jpg',
+  },
+  {
+    title: 'Festival music',
+    location: 'Berlin, Germany',
+    date: 'Apr 21th, 2021',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Festival-Music-PSD-Template.jpg',
+  },
+  {
+    title: 'Beach House',
+    location: 'Liboa, Portugal',
+    date: 'Aug 12th, 2020',
+    poster:
+      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Summer-Beach-House-Flyer.jpg',
+  },
+];
+
+const SPACING = 10;
+const ITEM_WIDTH = width * 0.86;
+const ITEM_HEIGHT = ITEM_WIDTH * 0.4;
+const VISIBLE_ITEMS = 3;
+
+export default function App() {
+  const [data, setData] = React.useState(DATA);
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={styles.container}>
+      <StatusBar hidden />
+      <StackList
+        data={data}
+        visibleItems={3}
+        itemWidth={ITEM_WIDTH}
+        itemHeight={ITEM_HEIGHT}
+        closeButtonView={
+          <View style={{width: 20, height: 20, backgroundColor: '#ffffff'}} />
+        }
+        spacing={10}
+        renderItem={(item) => {
+          const {index, activeIndex} = item;
+          console.log('app', item);
+          return (
+            <>
+              <View
+                style={{
+                  width: ITEM_WIDTH,
+                  height: ITEM_HEIGHT,
+                  borderRadius: 14,
+                  backgroundColor:
+                    index === activeIndex
+                      ? '#354BFA'
+                      : index === activeIndex + 1
+                      ? '#95A9F7'
+                      : index === activeIndex + 2
+                      ? '#BDC9F9'
+                      : index < activeIndex
+                      ? '#BDC9F9'
+                      : '#95A9F7',
+                  // opacity:
+                  //   index === activeIndex
+                  //     ? 1
+                  //     : index === activeIndex + 1
+                  //     ? 0.7
+                  //     : index === activeIndex + 2
+                  //     ? 0.5
+                  //     : 0,
+                }}
+              />
+              {/* <TouchableOpacity
+                style={{
+                  top: 20,
+                  right: 20,
+                  position: 'absolute',
+                }}
+                onPress={() => {
+                  console.log('print', index);
+                  setActiveIndex(index + 1);
+                }}>
+                <View
+                  style={{width: 20, height: 20, backgroundColor: '#ff23ff'}}
+                />
+              </TouchableOpacity> */}
+            </>
+          );
+        }}
+      />
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  title: {
+    fontSize: 28,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: -1,
   },
-  body: {
-    backgroundColor: Colors.white,
+  location: {
+    fontSize: 16,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
+  date: {
     fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
   },
 });
-
-export default App;

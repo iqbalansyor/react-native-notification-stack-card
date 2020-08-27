@@ -81,7 +81,7 @@ const StackList: React.FunctionComponent<StackListProps> = (
         });
         const translateY = scrollXAnimated.interpolate({
           inputRange,
-          outputRange: [-props.spacing, 0, 0, 1000],
+          outputRange: [props.spacing, 0, 0, 1000],
         });
         const scale = scrollXAnimated.interpolate({
           inputRange,
