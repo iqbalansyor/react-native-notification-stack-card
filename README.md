@@ -1,10 +1,10 @@
-[![npm](https://img.shields.io/badge/npm-v0.1.0-blue)](https://www.npmjs.com/package/react-native-vega-scroll-list)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
-# React Native Vega Scroll List
+# WIP
 
-A React Native FlatList with a lightweight animation which fade and shrink the head item of list when scrolling. **Works on iOS & Android.**
-#### Inspired by [Vega Scroll](https://github.com/ApplikeySolutions/VegaScroll) - an iOS dependency.
+# React Native Notification Stack Card
+
+A React Native Notification Stack Card
 
 ## Preview
 [![vega-scroll-list-demo4175c3812f341d26.gif](https://s7.gifyu.com/images/vega-scroll-list-demo4175c3812f341d26.gif)](https://gifyu.com/image/Q8Qh)
