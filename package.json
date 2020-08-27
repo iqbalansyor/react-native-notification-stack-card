@@ -2,7 +2,7 @@
   "name": "react-native-notification-stack-card",
   "version": "1.0.0",
   "description": "A React Native stack list for notification card",
-  "main": "src/VegaScrollList.tsx",
+  "main": "src/StackCardList.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
