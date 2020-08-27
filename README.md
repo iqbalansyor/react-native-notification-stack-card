@@ -7,38 +7,12 @@
 A React Native Notification Stack Card
 
 ## Preview
-[![vega-scroll-list-demo4175c3812f341d26.gif](https://s7.gifyu.com/images/vega-scroll-list-demo4175c3812f341d26.gif)](https://gifyu.com/image/Q8Qh)
 
 ## Installation
-`npm install react-native-vega-scroll-list --save`
 
 ## Usage
-Import **VegaScrollList** component:
-
-```
-import VegaScrollList from 'react-native-vega-scroll-list';
-```
-
-Usage:
-
-This usage is similar with **FlatList**. **VegaScrollList** accepts **FlatList** props.
-
-```
-<VegaScrollList
-  distanceBetweenItem={12} // Add distance between item. Need to calculate animated
-  data={data}
-  keyExtractor={this.keyExtractor}
-  renderItem={this.renderItem}
-</VegaScrollList>
-```
 
 ## Configuration
-**VegaScrollList** accepts **FlatList** props.
-Only need to add `distanceBetweenItem` to calculate animation.
-
-| prop | type/valid values | default | description |
-| - | - | - | - |
-| distanceBetweenItem | number | 8 | distance between item. Needed to calculate the animation|
 
 ## Demo Application
 This repository contains a demo React Native application with a customizable example of the `VegaScrollList` component in use.
