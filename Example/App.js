@@ -120,64 +120,44 @@ export default function App() {
         }}
         renderItem={(item) => {
           const {index, activeIndex} = item;
-          console.log('app', item);
           const isActiveIndex = index === activeIndex;
-
+          const isSecondIndex = (index === index) === activeIndex + 1;
+          const isThirdIndex = index === activeIndex + 2;
+          const isAfterClicked = index < activeIndex;
+          const backgroundColor = isActiveIndex
+            ? 'transparent'
+            : isSecondIndex
+            ? '#95A9F7'
+            : isThirdIndex
+            ? '#BDC9F9'
+            : isAfterClicked
+            ? '#BDC9F9'
+            : '#95A9F7';
+          const contentView = (
+            <View
+              style={{
+                width: ITEM_WIDTH,
+                height: ITEM_HEIGHT,
+                borderRadius: 24,
+                backgroundColor: backgroundColor,
+              }}>
+              {/* <View>
+                <Text>{'Below'}</Text>
+                <Text>{'This is your notif'}</Text>
+              </View> */}
+            </View>
+          );
           return (
             <>
               {isActiveIndex ? (
                 <LinearGradient
                   colors={['#3856D0', '#354BFA']}
                   style={{borderRadius: 24}}>
-                  <View
-                    style={{
-                      width: ITEM_WIDTH,
-                      height: ITEM_HEIGHT,
-                      borderRadius: 24,
-                    }}
-                  />
+                  {contentView}
                 </LinearGradient>
               ) : (
-                <View
-                  style={{
-                    width: ITEM_WIDTH,
-                    height: ITEM_HEIGHT,
-                    borderRadius: 24,
-                    backgroundColor:
-                      index === activeIndex
-                        ? '#354BFA'
-                        : index === activeIndex + 1
-                        ? '#95A9F7'
-                        : index === activeIndex + 2
-                        ? '#BDC9F9'
-                        : index < activeIndex
-                        ? '#BDC9F9'
-                        : '#95A9F7',
-                    // opacity:
-                    //   index === activeIndex
-                    //     ? 1
-                    //     : index === activeIndex + 1
-                    //     ? 0.7
-                    //     : index === activeIndex + 2
-                    //     ? 0.5
-                    //     : 0,
-                  }}
-                />
+                contentView
               )}
-              {/* <TouchableOpacity
-                style={{
-                  top: 20,
-                  right: 20,
-                  position: 'absolute',
-                }}
-                onPress={() => {
-                  console.log('print', index);
-                  setActiveIndex(index + 1);
-                }}>
-                <View
-                  style={{width: 20, height: 20, backgroundColor: '#ff23ff'}}
-                />
-              </TouchableOpacity> */}
             </>
           );
         }}

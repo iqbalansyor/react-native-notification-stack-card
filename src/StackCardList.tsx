@@ -49,7 +49,10 @@ const StackCardList: React.FunctionComponent<StackCardListProps> = (
       contentContainerStyle={{
         flex: 1,
         justifyContent: 'center',
-        marginTop: 0.05 * props.itemHeight * props.visibleItems,
+        marginBottom:
+          props.stackType === 'above' ? props.spacing * props.visibleItems : 0,
+        marginTop:
+          props.stackType === 'above' ? 0 : props.spacing * props.visibleItems,
       }}
       scrollEnabled={false}
       removeClippedSubviews={false}
