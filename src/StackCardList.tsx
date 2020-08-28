@@ -53,9 +53,7 @@ class StackCardList extends React.Component<
     this.setState({ listIndex: this.state.listIndex + 1 });
 
     if (this.state.listIndex === this.props.data.length - 1) {
-      if (this.props.onEmpty) {
-        this.props.onEmpty();
-      }
+      this.props.onEmpty && this.props.onEmpty();
     }
   };
 
@@ -156,7 +154,7 @@ class StackCardList extends React.Component<
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={(event) => {
-                  this.props.onItemPress(index);
+                  this.props.onItemPress && this.props.onItemPress(index);
                 }}
               >
                 <View>

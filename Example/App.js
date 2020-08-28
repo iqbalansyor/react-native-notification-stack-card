@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TouchableHighlight,
+  Alert,
 } from 'react-native';
 const {width} = Dimensions.get('screen');
 import StackCardList, {
@@ -50,11 +51,26 @@ const BelowNotifification = () => {
       closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
       stackType={'above'}
       spacing={SPACING}
-      onItemPress={(index) => {
-        console.log('press', index);
-      }}
       onEmpty={() => {
         setIsShow(false);
+        Alert.alert('Notification empty', `Notification empty`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
+      }}
+      onItemPress={(index) => {
+        Alert.alert(
+          'Notification clicked',
+          `Notification Clicked index ${index}`,
+          [
+            {
+              text: 'OK',
+              onPress: () => {},
+            },
+          ],
+        );
       }}
       renderItem={(item) => {
         const {index, activeIndex} = item;
@@ -123,7 +139,8 @@ const BelowNotifification = () => {
 
 const AboveNotification = () => {
   const [data, setData] = React.useState(DATA);
-  return (
+  const [isShow, setIsShow] = React.useState(true);
+  return isShow ? (
     <StackCardList
       data={data}
       visibleItems={VISIBLE_ITEMS}
@@ -132,8 +149,26 @@ const AboveNotification = () => {
       closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
       stackType={'below'}
       spacing={SPACING}
+      onEmpty={() => {
+        setIsShow(false);
+        Alert.alert('Notification empty', `Notification empty`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
+      }}
       onItemPress={(index) => {
-        console.log('press', index);
+        Alert.alert(
+          'Notification clicked',
+          `Notification Clicked index ${index}`,
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed'),
+            },
+          ],
+        );
       }}
       renderItem={(item) => {
         const {index, activeIndex} = item;
@@ -197,7 +232,7 @@ const AboveNotification = () => {
         );
       }}
     />
-  );
+  ) : null;
 };
 
 const SPACING_L = 10;
@@ -207,8 +242,9 @@ const VISIBLE_ITEMS_L = 3;
 
 const LittleBelowNotification = () => {
   const [data, setData] = React.useState(DATA);
+  const [isShow, setIsShow] = React.useState(true);
   let notifRef = {};
-  return (
+  return isShow ? (
     <StackCardList
       ref={(ref) => {
         notifRef = ref;
@@ -220,7 +256,25 @@ const LittleBelowNotification = () => {
       stackType={'below'}
       spacing={SPACING_L}
       onItemPress={(index) => {
-        console.log('press', index);
+        Alert.alert(
+          'Notification clicked',
+          `Notification Clicked index ${index}`,
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed'),
+            },
+          ],
+        );
+      }}
+      onEmpty={() => {
+        setIsShow(false);
+        Alert.alert('Notification empty', `Notification empty`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
       }}
       renderItem={(item) => {
         const {index, activeIndex} = item;
@@ -307,13 +361,14 @@ const LittleBelowNotification = () => {
         );
       }}
     />
-  );
+  ) : null;
 };
 
 const LittleAboveNotification = () => {
   const [data, setData] = React.useState(DATA);
+  const [isShow, setIsShow] = React.useState(true);
   let notifRef = {};
-  return (
+  return isShow ? (
     <StackCardList
       ref={(ref) => {
         notifRef = ref;
@@ -326,6 +381,27 @@ const LittleAboveNotification = () => {
       spacing={SPACING_L}
       onItemPress={(index) => {
         console.log('press', index);
+      }}
+      onItemPress={(index) => {
+        Alert.alert(
+          'Notification clicked',
+          `Notification Clicked index ${index}`,
+          [
+            {
+              text: 'OK',
+              onPress: () => console.log('OK Pressed'),
+            },
+          ],
+        );
+      }}
+      onEmpty={() => {
+        setIsShow(false);
+        Alert.alert('Notification empty', `Notification empty`, [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]);
       }}
       renderItem={(item) => {
         const {index, activeIndex} = item;
@@ -412,7 +488,7 @@ const LittleAboveNotification = () => {
         );
       }}
     />
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
