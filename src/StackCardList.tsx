@@ -18,6 +18,7 @@ interface StackCardListProps {
   closeButtonView: React.ReactElement;
   renderItem: (item: any) => React.ReactElement;
   onItemPress: (index: number) => void;
+  onEmpty: () => void;
 }
 
 interface StackCardListState {
@@ -50,6 +51,12 @@ class StackCardList extends React.Component<
   next = () => {
     this.scrollXIndex.setValue(this.state.listIndex + 1);
     this.setState({ listIndex: this.state.listIndex + 1 });
+
+    if (this.state.listIndex === this.props.data.length - 1) {
+      if (this.props.onEmpty) {
+        this.props.onEmpty();
+      }
+    }
   };
 
   render() {
@@ -69,11 +76,11 @@ class StackCardList extends React.Component<
           flex: 1,
           justifyContent: 'center',
           marginBottom:
-            this.props.stackType === 'above'
+            this.props.stackType === 'below'
               ? this.props.spacing * (this.props.visibleItems - 1)
               : 0,
           marginTop:
-            this.props.stackType === 'above'
+            this.props.stackType === 'below'
               ? 0
               : this.props.spacing * (this.props.visibleItems - 1),
         }}
@@ -98,7 +105,7 @@ class StackCardList extends React.Component<
         }}
         renderItem={(renderItemProps) => {
           let spacing = this.props.spacing;
-          if (this.props.stackType === 'above') {
+          if (this.props.stackType === 'below') {
             spacing = -this.props.spacing;
           }
 

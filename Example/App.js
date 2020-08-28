@@ -40,17 +40,21 @@ export default function App() {
 
 const BelowNotifification = () => {
   const [data, setData] = React.useState(DATA);
-  return (
+  const [isShow, setIsShow] = React.useState(true);
+  return isShow ? (
     <StackCardList
       data={data}
       visibleItems={VISIBLE_ITEMS}
       itemWidth={ITEM_WIDTH}
       itemHeight={ITEM_HEIGHT}
       closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
-      stackType={'below'}
+      stackType={'above'}
       spacing={SPACING}
       onItemPress={(index) => {
         console.log('press', index);
+      }}
+      onEmpty={() => {
+        setIsShow(false);
       }}
       renderItem={(item) => {
         const {index, activeIndex} = item;
@@ -97,7 +101,7 @@ const BelowNotifification = () => {
           <>
             {isActiveIndex ? (
               <LinearGradient
-                colors={['#3F5FE3', '#1F30BA']}
+                colors={['#1F30BA', '#3F5FE3']}
                 style={{borderRadius: 24}}>
                 {contentView}
               </LinearGradient>
@@ -114,7 +118,7 @@ const BelowNotifification = () => {
         );
       }}
     />
-  );
+  ) : null;
 };
 
 const AboveNotification = () => {
@@ -126,7 +130,7 @@ const AboveNotification = () => {
       itemWidth={ITEM_WIDTH}
       itemHeight={ITEM_HEIGHT}
       closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
-      stackType={'above'}
+      stackType={'below'}
       spacing={SPACING}
       onItemPress={(index) => {
         console.log('press', index);
@@ -213,7 +217,7 @@ const LittleBelowNotification = () => {
       visibleItems={VISIBLE_ITEMS_L}
       itemWidth={ITEM_WIDTH_L}
       itemHeight={ITEM_HEIGHT_L}
-      stackType={'above'}
+      stackType={'below'}
       spacing={SPACING_L}
       onItemPress={(index) => {
         console.log('press', index);
@@ -258,7 +262,7 @@ const LittleBelowNotification = () => {
                     marginBottom: 8,
                     fontSize: 14,
                   }}>
-                  {`[Line] This is your notification (${index})`}
+                  {`This is your notification (${index})`}
                 </Text>
               </View>
               <TouchableOpacity
@@ -363,7 +367,7 @@ const LittleAboveNotification = () => {
                     marginBottom: 8,
                     fontSize: 14,
                   }}>
-                  {`[Line] This is your notification (${index})`}
+                  {`This is your notification (${index})`}
                 </Text>
               </View>
               <TouchableOpacity
@@ -416,17 +420,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '900',
-    textTransform: 'uppercase',
-    letterSpacing: -1,
-  },
-  location: {
-    fontSize: 16,
-  },
-  date: {
-    fontSize: 12,
   },
 });
