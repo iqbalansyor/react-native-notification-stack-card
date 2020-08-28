@@ -19,12 +19,9 @@ import {
 } from 'react-native';
 const {width} = Dimensions.get('screen');
 // import {EvilIcons} from '@expo/vector-icons';
-import {
-  FlingGestureHandler,
-  Directions,
-  State,
-} from 'react-native-gesture-handler';
-import StackList, {setActiveIndex} from './StackList';
+import StackCardList from 'react-native-notification-stack-card'; // setActiveIndex,
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // https://www.creative-flyers.com
 const DATA = [
@@ -100,7 +97,7 @@ const DATA = [
   },
 ];
 
-const SPACING = 10;
+const SPACING = 20;
 const ITEM_WIDTH = width * 0.86;
 const ITEM_HEIGHT = ITEM_WIDTH * 0.4;
 const VISIBLE_ITEMS = 3;
@@ -110,45 +107,63 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <StackList
+      <StackCardList
         data={data}
         visibleItems={3}
         itemWidth={ITEM_WIDTH}
         itemHeight={ITEM_HEIGHT}
-        closeButtonView={
-          <View style={{width: 20, height: 20, backgroundColor: '#ffffff'}} />
-        }
-        spacing={10}
+        closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
+        stackType={'below'}
+        spacing={SPACING}
+        onItemPress={(index) => {
+          console.log('press', index);
+        }}
         renderItem={(item) => {
           const {index, activeIndex} = item;
           console.log('app', item);
+          const isActiveIndex = index === activeIndex;
+
           return (
             <>
-              <View
-                style={{
-                  width: ITEM_WIDTH,
-                  height: ITEM_HEIGHT,
-                  borderRadius: 14,
-                  backgroundColor:
-                    index === activeIndex
-                      ? '#354BFA'
-                      : index === activeIndex + 1
-                      ? '#95A9F7'
-                      : index === activeIndex + 2
-                      ? '#BDC9F9'
-                      : index < activeIndex
-                      ? '#BDC9F9'
-                      : '#95A9F7',
-                  // opacity:
-                  //   index === activeIndex
-                  //     ? 1
-                  //     : index === activeIndex + 1
-                  //     ? 0.7
-                  //     : index === activeIndex + 2
-                  //     ? 0.5
-                  //     : 0,
-                }}
-              />
+              {isActiveIndex ? (
+                <LinearGradient
+                  colors={['#3856D0', '#354BFA']}
+                  style={{borderRadius: 24}}>
+                  <View
+                    style={{
+                      width: ITEM_WIDTH,
+                      height: ITEM_HEIGHT,
+                      borderRadius: 24,
+                    }}
+                  />
+                </LinearGradient>
+              ) : (
+                <View
+                  style={{
+                    width: ITEM_WIDTH,
+                    height: ITEM_HEIGHT,
+                    borderRadius: 24,
+                    backgroundColor:
+                      index === activeIndex
+                        ? '#354BFA'
+                        : index === activeIndex + 1
+                        ? '#95A9F7'
+                        : index === activeIndex + 2
+                        ? '#BDC9F9'
+                        : index < activeIndex
+                        ? '#BDC9F9'
+                        : '#95A9F7',
+                    // opacity:
+                    //   index === activeIndex
+                    //     ? 1
+                    //     : index === activeIndex + 1
+                    //     ? 0.7
+                    //     : index === activeIndex + 2
+                    //     ? 0.5
+                    //     : 0,
+                  }}
+                />
+              )}
               {/* <TouchableOpacity
                 style={{
                   top: 20,
