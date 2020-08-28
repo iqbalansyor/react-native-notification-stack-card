@@ -1,8 +1,3 @@
-/**
- *
- * Inspiration: https://dribbble.com/shots/3731362-Event-cards-iOS-interaction
- */
-
 import * as React from 'react';
 import {
   StatusBar,
@@ -18,84 +13,13 @@ import {
   TouchableHighlight,
 } from 'react-native';
 const {width} = Dimensions.get('screen');
-// import {EvilIcons} from '@expo/vector-icons';
-import StackCardList from 'react-native-notification-stack-card'; // setActiveIndex,
+import StackCardList, {
+  setActiveIndex,
+} from 'react-native-notification-stack-card'; // setActiveIndex,
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// https://www.creative-flyers.com
-const DATA = [
-  {
-    title: 'Afro vibes',
-    location: 'Mumbai, India',
-    date: 'Nov 17th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/07/Afro-vibes-flyer-template.jpg',
-  },
-  {
-    title: 'Jungle Party',
-    location: 'Unknown',
-    date: 'Sept 3rd, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2019/11/Jungle-Party-Flyer-Template-1.jpg',
-  },
-  {
-    title: '4th Of July',
-    location: 'New York, USA',
-    date: 'Oct 11th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/4th-Of-July-Invitation.jpg',
-  },
-  {
-    title: 'Summer festival',
-    location: 'Bucharest, Romania',
-    date: 'Aug 17th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/07/Summer-Music-Festival-Poster.jpg',
-  },
-  {
-    title: 'BBQ with friends',
-    location: 'Prague, Czech Republic',
-    date: 'Sept 11th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/BBQ-Flyer-Psd-Template.jpg',
-  },
-  {
-    title: 'Festival music',
-    location: 'Berlin, Germany',
-    date: 'Apr 21th, 2021',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Festival-Music-PSD-Template.jpg',
-  },
-  {
-    title: 'Beach House',
-    location: 'Liboa, Portugal',
-    date: 'Aug 12th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Summer-Beach-House-Flyer.jpg',
-  },
-  {
-    title: 'BBQ with friends',
-    location: 'Prague, Czech Republic',
-    date: 'Sept 11th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/BBQ-Flyer-Psd-Template.jpg',
-  },
-  {
-    title: 'Festival music',
-    location: 'Berlin, Germany',
-    date: 'Apr 21th, 2021',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Festival-Music-PSD-Template.jpg',
-  },
-  {
-    title: 'Beach House',
-    location: 'Liboa, Portugal',
-    date: 'Aug 12th, 2020',
-    poster:
-      'https://www.creative-flyers.com/wp-content/uploads/2020/06/Summer-Beach-House-Flyer.jpg',
-  },
-];
+const DATA = [{}, {}, {}, {}, {}, {}, {}];
 
 const SPACING = 20;
 const ITEM_WIDTH = width * 0.86;
@@ -103,68 +27,389 @@ const ITEM_HEIGHT = ITEM_WIDTH * 0.4;
 const VISIBLE_ITEMS = 3;
 
 export default function App() {
-  const [data, setData] = React.useState(DATA);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      <StackCardList
-        data={data}
-        visibleItems={3}
-        itemWidth={ITEM_WIDTH}
-        itemHeight={ITEM_HEIGHT}
-        closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
-        stackType={'below'}
-        spacing={SPACING}
-        onItemPress={(index) => {
-          console.log('press', index);
-        }}
-        renderItem={(item) => {
-          const {index, activeIndex} = item;
-          const isActiveIndex = index === activeIndex;
-          const isSecondIndex = (index === index) === activeIndex + 1;
-          const isThirdIndex = index === activeIndex + 2;
-          const isAfterClicked = index < activeIndex;
-          const backgroundColor = isActiveIndex
-            ? 'transparent'
-            : isSecondIndex
-            ? '#95A9F7'
-            : isThirdIndex
-            ? '#BDC9F9'
-            : isAfterClicked
-            ? '#BDC9F9'
-            : '#95A9F7';
-          const contentView = (
-            <View
-              style={{
-                width: ITEM_WIDTH,
-                height: ITEM_HEIGHT,
-                borderRadius: 24,
-                backgroundColor: backgroundColor,
-              }}>
-              {/* <View>
-                <Text>{'Below'}</Text>
-                <Text>{'This is your notif'}</Text>
-              </View> */}
-            </View>
-          );
-          return (
-            <>
-              {isActiveIndex ? (
-                <LinearGradient
-                  colors={['#3856D0', '#354BFA']}
-                  style={{borderRadius: 24}}>
-                  {contentView}
-                </LinearGradient>
-              ) : (
-                contentView
-              )}
-            </>
-          );
-        }}
-      />
+      <BelowNotifification />
+      <AboveNotification />
+      <LittleBelowNotification />
+      <LittleAboveNotification />
     </SafeAreaView>
   );
 }
+
+const BelowNotifification = () => {
+  const [data, setData] = React.useState(DATA);
+  return (
+    <StackCardList
+      data={data}
+      visibleItems={VISIBLE_ITEMS}
+      itemWidth={ITEM_WIDTH}
+      itemHeight={ITEM_HEIGHT}
+      closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
+      stackType={'below'}
+      spacing={SPACING}
+      onItemPress={(index) => {
+        console.log('press', index);
+      }}
+      renderItem={(item) => {
+        const {index, activeIndex} = item;
+        const isActiveIndex = index === activeIndex;
+        const isSecondIndex = (index === index) === activeIndex + 1;
+        const isThirdIndex = index === activeIndex + 2;
+        const isAfterClicked = index < activeIndex;
+        const backgroundColor = isActiveIndex
+          ? 'transparent'
+          : isSecondIndex
+          ? '#95A9F7'
+          : isThirdIndex
+          ? '#BDC9F9'
+          : isAfterClicked
+          ? '#BDC9F9'
+          : '#95A9F7';
+        const contentView = (
+          <View
+            style={{
+              width: ITEM_WIDTH,
+              height: ITEM_HEIGHT,
+              borderRadius: 24,
+              backgroundColor: backgroundColor,
+            }}>
+            <View style={{marginHorizontal: 15, marginTop: 24}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  marginBottom: 8,
+                  fontSize: 14,
+                }}>
+                {`[Below] This is your notification (${index})`}
+              </Text>
+              <Text style={{color: 'white', fontSize: 13, lineHeight: 18}}>
+                {
+                  'We have notification on your app. This is your first notifaction'
+                }
+              </Text>
+            </View>
+          </View>
+        );
+        return (
+          <>
+            {isActiveIndex ? (
+              <LinearGradient
+                colors={['#3F5FE3', '#1F30BA']}
+                style={{borderRadius: 24}}>
+                {contentView}
+              </LinearGradient>
+            ) : (
+              <View
+                style={{
+                  width: ITEM_WIDTH,
+                  height: ITEM_HEIGHT,
+                  borderRadius: 24,
+                  backgroundColor: backgroundColor,
+                }}></View>
+            )}
+          </>
+        );
+      }}
+    />
+  );
+};
+
+const AboveNotification = () => {
+  const [data, setData] = React.useState(DATA);
+  return (
+    <StackCardList
+      data={data}
+      visibleItems={VISIBLE_ITEMS}
+      itemWidth={ITEM_WIDTH}
+      itemHeight={ITEM_HEIGHT}
+      closeButtonView={<Icon name={'close'} color={'#ffffff'} size={20} />}
+      stackType={'above'}
+      spacing={SPACING}
+      onItemPress={(index) => {
+        console.log('press', index);
+      }}
+      renderItem={(item) => {
+        const {index, activeIndex} = item;
+        const isActiveIndex = index === activeIndex;
+        const isSecondIndex = (index === index) === activeIndex + 1;
+        const isThirdIndex = index === activeIndex + 2;
+        const isAfterClicked = index < activeIndex;
+        const backgroundColor = isActiveIndex
+          ? 'transparent'
+          : isSecondIndex
+          ? '#95A9F7'
+          : isThirdIndex
+          ? '#BDC9F9'
+          : isAfterClicked
+          ? '#BDC9F9'
+          : '#95A9F7';
+        const contentView = (
+          <View
+            style={{
+              width: ITEM_WIDTH,
+              height: ITEM_HEIGHT,
+              borderRadius: 24,
+              backgroundColor: backgroundColor,
+            }}>
+            <View style={{marginHorizontal: 15, marginTop: 24}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  marginBottom: 8,
+                  fontSize: 14,
+                }}>
+                {`[Above] This is your notification (${index})`}
+              </Text>
+              <Text style={{color: 'white', fontSize: 13, lineHeight: 18}}>
+                {
+                  'We have notification on your app. This is your first notifaction'
+                }
+              </Text>
+            </View>
+          </View>
+        );
+        return (
+          <>
+            {isActiveIndex ? (
+              <LinearGradient
+                colors={['#DA2BF7', '#A527BC']}
+                style={{borderRadius: 24}}>
+                {contentView}
+              </LinearGradient>
+            ) : (
+              <View
+                style={{
+                  width: ITEM_WIDTH,
+                  height: ITEM_HEIGHT,
+                  borderRadius: 24,
+                  backgroundColor: backgroundColor,
+                }}></View>
+            )}
+          </>
+        );
+      }}
+    />
+  );
+};
+
+const SPACING_L = 10;
+const ITEM_WIDTH_L = width * 0.86;
+const ITEM_HEIGHT_L = ITEM_WIDTH * 0.2;
+const VISIBLE_ITEMS_L = 3;
+
+const LittleBelowNotification = () => {
+  const [data, setData] = React.useState(DATA);
+  let notifRef = {};
+  return (
+    <StackCardList
+      ref={(ref) => {
+        notifRef = ref;
+      }}
+      data={data}
+      visibleItems={VISIBLE_ITEMS_L}
+      itemWidth={ITEM_WIDTH_L}
+      itemHeight={ITEM_HEIGHT_L}
+      stackType={'above'}
+      spacing={SPACING_L}
+      onItemPress={(index) => {
+        console.log('press', index);
+      }}
+      renderItem={(item) => {
+        const {index, activeIndex} = item;
+        const isActiveIndex = index === activeIndex;
+        const isSecondIndex = (index === index) === activeIndex + 1;
+        const isThirdIndex = index === activeIndex + 2;
+        const isAfterClicked = index < activeIndex;
+        const backgroundColor = isActiveIndex
+          ? 'transparent'
+          : isSecondIndex
+          ? '#95A9F7'
+          : isThirdIndex
+          ? '#BDC9F9'
+          : isAfterClicked
+          ? '#BDC9F9'
+          : '#95A9F7';
+        const contentView = (
+          <View
+            style={{
+              width: ITEM_WIDTH_L,
+              height: ITEM_HEIGHT_L,
+              borderRadius: 24,
+              backgroundColor: backgroundColor,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  marginHorizontal: 15,
+                  marginTop: 24,
+                  flex: 1,
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    marginBottom: 8,
+                    fontSize: 14,
+                  }}>
+                  {`[Line] This is your notification (${index})`}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={{
+                  paddingTop: 24,
+                  paddingBottom: 24,
+                  width: 50,
+                  backgroundColor: '#000000',
+                  opacity: 0.5,
+                }}
+                onPress={() => {
+                  notifRef.next();
+                }}>
+                <Icon
+                  name={'close'}
+                  color={'#ffffff'}
+                  size={20}
+                  style={{marginLeft: 15}}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        );
+        return (
+          <>
+            {isActiveIndex ? (
+              <LinearGradient
+                colors={['#3F5FE3', '#1F30BA']}
+                style={{borderRadius: 18}}>
+                {contentView}
+              </LinearGradient>
+            ) : (
+              <View
+                style={{
+                  width: ITEM_WIDTH_L,
+                  height: ITEM_HEIGHT_L,
+                  borderRadius: 24,
+                  backgroundColor: backgroundColor,
+                }}></View>
+            )}
+          </>
+        );
+      }}
+    />
+  );
+};
+
+const LittleAboveNotification = () => {
+  const [data, setData] = React.useState(DATA);
+  let notifRef = {};
+  return (
+    <StackCardList
+      ref={(ref) => {
+        notifRef = ref;
+      }}
+      data={data}
+      visibleItems={VISIBLE_ITEMS_L}
+      itemWidth={ITEM_WIDTH_L}
+      itemHeight={ITEM_HEIGHT_L}
+      stackType={'above'}
+      spacing={SPACING_L}
+      onItemPress={(index) => {
+        console.log('press', index);
+      }}
+      renderItem={(item) => {
+        const {index, activeIndex} = item;
+        const isActiveIndex = index === activeIndex;
+        const isSecondIndex = (index === index) === activeIndex + 1;
+        const isThirdIndex = index === activeIndex + 2;
+        const isAfterClicked = index < activeIndex;
+        const backgroundColor = isActiveIndex
+          ? 'transparent'
+          : isSecondIndex
+          ? '#95A9F7'
+          : isThirdIndex
+          ? '#BDC9F9'
+          : isAfterClicked
+          ? '#BDC9F9'
+          : '#95A9F7';
+        const contentView = (
+          <View
+            style={{
+              width: ITEM_WIDTH_L,
+              height: ITEM_HEIGHT_L,
+              borderRadius: 24,
+              backgroundColor: backgroundColor,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <View
+                style={{
+                  marginHorizontal: 15,
+                  marginTop: 24,
+                  flex: 1,
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    marginBottom: 8,
+                    fontSize: 14,
+                  }}>
+                  {`[Line] This is your notification (${index})`}
+                </Text>
+              </View>
+              <TouchableOpacity
+                style={{
+                  paddingTop: 24,
+                  paddingBottom: 24,
+                  width: 50,
+                  backgroundColor: '#000000',
+                  opacity: 0.5,
+                }}
+                onPress={() => {
+                  notifRef.next();
+                }}>
+                <Icon
+                  name={'close'}
+                  color={'#ffffff'}
+                  size={20}
+                  style={{marginLeft: 15}}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        );
+        return (
+          <>
+            {isActiveIndex ? (
+              <LinearGradient
+                colors={['#DA2BF7', '#A527BC']}
+                style={{borderRadius: 18}}>
+                {contentView}
+              </LinearGradient>
+            ) : (
+              <View
+                style={{
+                  width: ITEM_WIDTH_L,
+                  height: ITEM_HEIGHT_L,
+                  borderRadius: 24,
+                  backgroundColor: backgroundColor,
+                }}></View>
+            )}
+          </>
+        );
+      }}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
