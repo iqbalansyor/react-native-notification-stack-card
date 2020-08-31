@@ -19,8 +19,8 @@ This repository contains a demo React Native application with a customizable exa
 
 To use the demo application:
 
-1) Clone this repository: `https://github.com/iqbalansyor/react-native-vega-scroll-list.git`
-2) Navigate to the demo application: `cd path/to/this/repository/react-native-vega-scroll-list/Example`
+1) Clone this repository: `https://github.com/iqbalansyor/react-native-notification-stack-card.git`
+2) Navigate to the demo application: `cd path/to/this/repository/react-native-notification-stack-card/Example`
 3) Install demo application dependencies: `npm install`
 4) For ios, run `cd ios && pod install && cd ..`
 5) Run `npm run start` || `react-native run-android` || `react-native run-ios`
