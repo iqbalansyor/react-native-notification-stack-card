@@ -5,6 +5,8 @@
 
 A React Native stack list for notification card
 
+#### Inspired by [FlexinStudio](https://gumroad.com/flexinstudio#AdPTa)
+
 ## Preview
 
 [![notif-cardsfd3015b508480d7b.gif](https://s8.gifyu.com/images/notif-cardsfd3015b508480d7b.gif)](https://gifyu.com/image/gkrR)
