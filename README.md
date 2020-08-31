@@ -1,17 +1,19 @@
+[![npm](https://img.shields.io/badge/npm-v0.1.0-blue)](https://www.npmjs.com/package/react-native-notification-stack-card)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
-
-# WIP
 
 # React Native Notification Stack Card
 
-A React Native list animation for creating Notification Stack Card
+A React Native stack list for notification card
 
 ## Preview
+
+[![notif-cardsfd3015b508480d7b.gif](https://s8.gifyu.com/images/notif-cardsfd3015b508480d7b.gif)](https://gifyu.com/image/gkrR)
 
 ## Installation
 `npm install react-native-notification-stack-card --save`
 
 ## Usage
+<img src="https://i.ibb.co/2YFrqRV/Screen-Shot-2020-08-31-at-19-36-28.png" width="500" height="500">
 
 Import **StackCardList** component:
 
@@ -64,7 +66,12 @@ Customize your notification view based on **index** and **activeIndex**:
 To create close button there are 2 option:
 
 1. You can use `closeButtonView` props. The position is absolute (left: 20, top: 20). Pass your `x` icon or anything your view.
+
+<img src="https://i.ibb.co/ZdXsxpZ/Screen-Shot-2020-08-31-at-19-38-11.png" width="500" height="500">
+
 2. Create you own close button. And use `next()` when it pressed.
+
+<img src="https://i.ibb.co/rMJCxnq/Screen-Shot-2020-08-31-at-19-37-34.png" width="500" height="500">
 
 ## Configuration
 
