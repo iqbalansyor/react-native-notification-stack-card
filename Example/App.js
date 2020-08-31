@@ -60,10 +60,10 @@ const BelowNotifification = () => {
           },
         ]);
       }}
-      onItemPress={(index) => {
+      onItemPress={(index, item) => {
         Alert.alert(
           'Notification clicked',
-          `Notification Clicked index ${index}`,
+          `Notification Clicked index ${index} ${item}`,
           [
             {
               text: 'OK',
@@ -158,10 +158,10 @@ const AboveNotification = () => {
           },
         ]);
       }}
-      onItemPress={(index) => {
+      onItemPress={(index, item) => {
         Alert.alert(
           'Notification clicked',
-          `Notification Clicked index ${index}`,
+          `Notification Clicked index ${index} ${item}`,
           [
             {
               text: 'OK',
@@ -255,10 +255,10 @@ const LittleBelowNotification = () => {
       itemHeight={ITEM_HEIGHT_L}
       stackType={'below'}
       spacing={SPACING_L}
-      onItemPress={(index) => {
+      onItemPress={(index, item) => {
         Alert.alert(
           'Notification clicked',
-          `Notification Clicked index ${index}`,
+          `Notification Clicked index ${index} ${item}`,
           [
             {
               text: 'OK',
@@ -379,13 +379,10 @@ const LittleAboveNotification = () => {
       itemHeight={ITEM_HEIGHT_L}
       stackType={'above'}
       spacing={SPACING_L}
-      onItemPress={(index) => {
-        console.log('press', index);
-      }}
-      onItemPress={(index) => {
+      onItemPress={(index, item) => {
         Alert.alert(
           'Notification clicked',
-          `Notification Clicked index ${index}`,
+          `Notification Clicked index ${index} ${item}`,
           [
             {
               text: 'OK',

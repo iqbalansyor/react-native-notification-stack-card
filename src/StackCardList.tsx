@@ -17,7 +17,7 @@ interface StackCardListProps {
   spacing: number;
   closeButtonView: React.ReactElement;
   renderItem: (item: any) => React.ReactElement;
-  onItemPress: (index: number) => void;
+  onItemPress: (index: number, item: any) => void;
   onEmpty: () => void;
 }
 
@@ -154,7 +154,7 @@ class StackCardList extends React.Component<
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={(event) => {
-                  this.props.onItemPress && this.props.onItemPress(index);
+                  this.props.onItemPress && this.props.onItemPress(index, item);
                 }}
               >
                 <View>
