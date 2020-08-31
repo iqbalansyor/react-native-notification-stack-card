@@ -14,9 +14,7 @@ import {
   Alert,
 } from 'react-native';
 const {width} = Dimensions.get('screen');
-import StackCardList, {
-  setActiveIndex,
-} from 'react-native-notification-stack-card'; // setActiveIndex,
+import StackCardList from 'react-native-notification-stack-card';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -140,6 +138,26 @@ const BelowNotifification = () => {
 const AboveNotification = () => {
   const [data, setData] = React.useState(DATA);
   const [isShow, setIsShow] = React.useState(true);
+
+  const renderItem = (item) => {
+    const {index, activeIndex} = item;
+    const isActiveIndex = index === activeIndex;
+    const isSecondIndex = (index === index) === activeIndex + 1;
+    const isThirdIndex = index === activeIndex + 2;
+    const isAfterClicked = index < activeIndex;
+    const backgroundColor = isActiveIndex
+      ? 'transparent'
+      : isSecondIndex
+      ? '#95A9F7'
+      : isThirdIndex
+      ? '#BDC9F9'
+      : isAfterClicked
+      ? '#BDC9F9'
+      : '#95A9F7';
+
+    return <YourContentView backgroundColor={backgroundColor} />;
+  };
+
   return isShow ? (
     <StackCardList
       data={data}

@@ -9,16 +9,16 @@ import {
 } from 'react-native';
 
 interface StackCardListProps {
-  visibleItems: number;
-  stackType: string;
+  visibleItems: number | 3;
+  stackType?: 'below' | 'above';
   data: any[];
-  itemWidth: number;
-  itemHeight: number;
-  spacing: number;
-  closeButtonView: React.ReactElement;
+  itemWidth: number | 100;
+  itemHeight: number | 100;
+  spacing: number | 10;
+  closeButtonView?: React.ReactElement;
   renderItem: (item: any) => React.ReactElement;
   onItemPress: (index: number, item: any) => void;
-  onEmpty: () => void;
+  onEmpty?: () => void;
 }
 
 interface StackCardListState {
@@ -59,12 +59,15 @@ class StackCardList extends React.Component<
 
   render() {
     const { listIndex } = this.state;
+    const visibleItems = this.props.visibleItems || 3;
+    const stackType = this.props.stackType || 'above';
+    const itemWidth = this.props.itemWidth || 100;
+    const itemHeight = this.props.itemHeight || 100;
+    let spacing = this.props.spacing || 10;
     return (
       <FlatList
         style={{
-          height:
-            this.props.spacing * (this.props.visibleItems - 1) +
-            this.props.itemHeight,
+          height: spacing * (visibleItems - 1) + itemHeight,
         }}
         data={this.props.data}
         keyExtractor={(_, index) => String(index)}
@@ -74,13 +77,8 @@ class StackCardList extends React.Component<
           flex: 1,
           justifyContent: 'center',
           marginBottom:
-            this.props.stackType === 'below'
-              ? this.props.spacing * (this.props.visibleItems - 1)
-              : 0,
-          marginTop:
-            this.props.stackType === 'below'
-              ? 0
-              : this.props.spacing * (this.props.visibleItems - 1),
+            stackType === 'below' ? spacing * (visibleItems - 1) : 0,
+          marginTop: stackType === 'below' ? 0 : spacing * (visibleItems - 1),
         }}
         scrollEnabled={false}
         removeClippedSubviews={false}
@@ -102,9 +100,9 @@ class StackCardList extends React.Component<
           );
         }}
         renderItem={(renderItemProps) => {
-          let spacing = this.props.spacing;
-          if (this.props.stackType === 'below') {
-            spacing = -this.props.spacing;
+          let newSpacing = spacing;
+          if (stackType === 'below') {
+            newSpacing = -spacing;
           }
 
           let { item, index } = renderItemProps;
@@ -120,7 +118,7 @@ class StackCardList extends React.Component<
           });
           const translateY = this.scrollXAnimated.interpolate({
             inputRange,
-            outputRange: [-spacing, 0, 0, 1000],
+            outputRange: [-newSpacing, 0, 0, 1000],
           });
           const scale = this.scrollXAnimated.interpolate({
             inputRange,
@@ -128,19 +126,14 @@ class StackCardList extends React.Component<
           });
           const opacity = this.scrollXAnimated.interpolate({
             inputRange,
-            outputRange: [
-              index - listIndex >= this.props.visibleItems ? 0 : 1,
-              1,
-              0,
-              0,
-            ],
+            outputRange: [index - listIndex >= visibleItems ? 0 : 1, 1, 0, 0],
           });
 
           return (
             <Animated.View
               style={{
                 position: 'absolute',
-                left: -this.props.itemWidth / 2,
+                left: -itemWidth / 2,
                 opacity,
                 transform: [
                   {
